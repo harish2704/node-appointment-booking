@@ -12,7 +12,8 @@
     "express-resource": "harish2704/express-resource-simple",
     "express-respond": "harish2704/express-respond",
     "connect-request-type-override": "harish2704/connect-request-type-override",
-    "debug": "~1.0.2"
+    "debug": "~1.0.2",
+    "underscore": "~1.6.0"
   },
   "subdomain": "harish2704-schedule-manager",
   "engines": {
