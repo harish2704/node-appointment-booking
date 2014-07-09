@@ -10,6 +10,8 @@ var availabilitySchema = new Schema({
 
 var TeacherSchema = new Schema({
     name: String,
+    age: Number,
+    isMale: { type: Boolean, default: true },
     topics: [String],
     availability:[ availabilitySchema ]
 });
@@ -82,6 +84,7 @@ var slotFilter = function( v1 ){
         return ( ( v2.start <= v1.start ) && ( v2.end >= v1.end ) );
     };
 };
+
 TeacherSchema.methods.getAppointment = function(args, cb ){
     args = {
         start: new Date( args.start ),
