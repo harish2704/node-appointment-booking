@@ -6,6 +6,7 @@
 var express = require('express')
   , routes = require('./routes')
   , http = require('http')
+  , config = require('./config.js')
   , path = require('path');
 
 var app = express();
@@ -18,7 +19,7 @@ require('./models/db.js').connect();
 app.engine('html', ectRenderer.render);
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 3000);
+  app.set('port',  config.port );
   app.set('views', __dirname + '/views');
   app.set('view engine', 'html');
   app.use(express.favicon());
