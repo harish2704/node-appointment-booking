@@ -17,7 +17,7 @@ var config = {
 
   production: {
     root: rootPath,
-    port: 3000,
+    port: process.env.OPENSHIFT_NODEJS_PORT || 3000,
     db: process.env.DB_URL || 'mongodb://localhost/scheduler'
   }
 };

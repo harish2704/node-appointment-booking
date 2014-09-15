@@ -38,6 +38,6 @@ app.configure('development', function(){
 
 routes( app );
 
-http.createServer(app).listen(app.get('port'), function(){
+http.createServer(app).listen(app.get('port'), process.env.OPENSHIFT_NODEJS_IP|| 'localhost', function(){
   console.log("Express server listening on port " + app.get('port'));
 });
