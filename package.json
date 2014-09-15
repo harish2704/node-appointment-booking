@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node app"
   },
+  "main": "app.js",
   "dependencies": {
     "express": "3.1.0",
     "ect": "~0.5.9",
