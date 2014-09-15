@@ -62,7 +62,7 @@ searchApp.controller('searchCtrl', function searchCtrl($scope, $http) {
             end : $scope.endTime,
             sex : $scope.sex,
             age : $scope.age,
-            keywords: keywords
+            topics: keywords
         };
         $http.post('/teachers/search', data ).success( function(data){
             console.log( data );

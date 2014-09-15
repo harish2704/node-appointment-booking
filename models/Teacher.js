@@ -32,14 +32,17 @@ function checkSlotOverLaps( slots ){
             break;
         }
     }
-    return overlaps;
+    if ( overlaps ){
+        return { index: slots.indexOf( iSlots[ startPoints[i] ] ) };
+    }
+    return null;
 }
 
 TeacherSchema.pre('save', function(cb){
     this.topics = this.topics.map( function(v){ return v.toLowerCase(); });
     var overlaps = checkSlotOverLaps( this.availability );
     if(overlaps){
-        return cb( new Error('Time slots overlaps') );
+        return cb( new Error('Time slots overlaps at ' + overlaps.index ) );
     }
     return cb( null, this );
 });
