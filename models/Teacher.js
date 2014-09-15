@@ -49,10 +49,10 @@ TeacherSchema.pre('save', function(cb){
 
 function parseConditions ( orig ){
     var conditions = {};
-    if ( orig.topics ){
-        if ( typeof orig.topics == 'string' ){
-            orig.topics = [ orig.topics ];
-        }
+    if ( typeof orig.topics == 'string' ){
+        orig.topics = [ orig.topics ];
+    }
+    if ( orig.topics && orig.topics.length ){
         orig.topics = orig.topics.map( function(v){ return v.toLowerCase(); });
         conditions.topics = { $in: orig.topics };
     }
