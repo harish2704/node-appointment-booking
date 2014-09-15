@@ -5,8 +5,8 @@ var path = require('path'),
 var config = {
   development: {
     root: rootPath,
-    port: process.env.OPENSHIFT_NODEJS_PORT || 3000,
-    db: process.env.DB_URL || process.env.OPENSHIFT_MONGODB_DB_URL || 'mongodb://localhost/scheduler'
+    port: 3000,
+    db: process.env.DB_URL || 'mongodb://localhost/scheduler'
   },
 
   test: {
