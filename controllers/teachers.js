@@ -1,7 +1,10 @@
 var Teacher = require('../models/Teacher.js');
 
+exports.list = function( req, res ){
+    res.render( 'teachers/list', { _title: 'Add data'} );
+};
 exports.index = function( req, res ){
-    res.render( 'teachers/index' );
+    res.render( 'teachers/search', { _title: 'Search availability of teachers'} );
 };
 
 exports.search = function( req, res ){
@@ -25,7 +28,7 @@ exports.create = function( req, res ){
         docs = [].slice.call( arguments, 1 );
         return res.respond( null, {teachers: docs } );
     });
-}
+};
 
 exports.deleteByQuery = function( req, res ){
     Teacher.remove( req.body, function(err, count ){
@@ -34,4 +37,4 @@ exports.deleteByQuery = function( req, res ){
         }
         return res.respond( null, { count: count} );
     });
-}
+};
