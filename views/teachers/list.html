@@ -1,0 +1,116 @@
+<% extend 'layout.html' %>
+
+<% block 'head' : %>
+<link rel="stylesheet" href="/bower_components/json-tree/json-tree.css">
+<style type="text/css" media="all">
+  body json-tree input[type="text"]{
+    height: 26px;
+    width: inherit;
+  }
+  body json-tree input[type="number"]{
+    height: 26px;
+    width: inherit;
+  }
+
+</style>
+<% end %>
+
+
+
+<% block 'body' : %>
+
+
+<div class="container" ng-app="listApp" >
+
+  <div ng-controller="myCtrl">
+
+    <button class="btn btn-success" ng-click="addTeacher()">Add</button>
+    <div class="clearfix"></div>
+    <div class="col-md-12">
+      <table class="table" >
+        <thead>
+          <tr>
+            <th>name</th>
+            <th>availability</th>
+            <th>subjects</th>
+            <th>actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr ng-repeat="teacher in teachers">
+            <td>
+              <input type="text" ng-model="teacher.name" />
+            </td>
+            <td>
+              <div class="col-md-10">
+              <json-tree json="teacher.availability"></json-tree>
+              </div>
+            </td>
+            <td>
+              <div class="col-md-10">
+              <json-tree json="teacher.topics"></json-tree>
+              </div>
+            </td>
+            <td>
+              <button class="btn btn-primary" ng-click="save(teacher)">save</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /.container -->
+
+<% block 'extra-js' : %>
+<script src="/bower_components/json-tree/json-tree.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+
+  function Teacher(){
+    this.topics = [];
+    this.availability = [];
+  }
+
+  angular.module('listApp', ['json-tree'])
+  .controller('myCtrl', ['$scope', '$http', function( $scope, $http ){
+    var teachers = [];
+    $scope.teachers = teachers;
+
+    function getData( page ){
+      $http.get('/teachers/list.json?page' + page)
+        .success(function(data){
+          if( !data.success ){ return false; }
+          var data = data.data;
+          teachers.splice(0, teachers.length );
+          data.teachers.forEach(function(v){
+            teachers.push(v);
+          });
+      })
+    }
+    $scope.getData = getData;
+
+    function addTeacher(){
+      $scope.teachers.unshift( new Teacher() );
+    }
+    $scope.addTeacher = addTeacher;
+
+    $scope.save = function(teacher){
+      var res;
+      if( teacher._id ){
+        res = $http.put('/teachers/' + teacher._id, teacher );
+      } else {
+        res = $http.post('/teachers/', [teacher] );
+      }
+      res.success(function(data){
+          if( data.success ){ alert('success'); } 
+          else { alert('Error'); }
+        });
+    }
+    getData(1);
+  }] ) 
+</script>
+<% end %>
+
+<% end %>
